@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+}
+
+#background {
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-image: url('animation.jpg');
+}
