@@ -1,6 +1,9 @@
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
-let background = document.getElementById("background");
+/* global Sine */
+/* global TweenLite */
+/* global requestAnimationFrame */
+let canvas = document.getElementById('canvas');
+let ctx = canvas.getContext('2d');
+let background = document.getElementById('background');
 resizeHandler();
 
 let gap = 25;
@@ -68,11 +71,11 @@ draw();
 for (let p of points) {
   shiftPoint(p);
 }
-document.addEventListener("mousedown", mouseDownHandler);
-document.addEventListener("mousemove", mouseMoveHandler);
-window.addEventListener("resize", resizeHandler);
+document.addEventListener('mousedown', mouseDownHandler);
+document.addEventListener('mousemove', mouseMoveHandler);
+window.addEventListener('resize', resizeHandler);
 
-function draw() {
+function draw () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let p of points) {
     if (p.alpha > 0) {
@@ -90,25 +93,25 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
-function drawLine(p, c) {
+function drawLine (p, c) {
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
   ctx.lineTo(c.x, c.y);
   ctx.lineWidth = point.lineWidth;
-  ctx.strokeStyle = "rgba(" + c.r + "," + c.g + "," + c.b + "," + p.alpha + ")";
+  ctx.strokeStyle = 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + p.alpha + ')';
   ctx.stroke();
   ctx.closePath();
 }
 
-function drawCircle(p) {
+function drawCircle (p) {
   ctx.beginPath();
   ctx.arc(p.circle.position.x, p.circle.position.y, p.circle.radius, 0, 2 * Math.PI);
-  ctx.fillStyle = "rgba(" + p.r + "," + p.g + "," + p.b + "," + p.circle.alpha + ")";
+  ctx.fillStyle = 'rgba(' + p.r + ',' + p.g + ',' + p.b + ',' + p.circle.alpha + ')';
   ctx.fill();
   ctx.closePath();
 }
 
-function processPoints() {
+function processPoints () {
   for (let p of points) {
     if (Math.abs(getDistance(mouse, p)) < 4000) {
       p.alpha = 0.3;
@@ -126,7 +129,7 @@ function processPoints() {
   }
 }
 
-function shiftPoint(p) {
+function shiftPoint (p) {
   if (point.randomColors) {
     assignRandomColor(p);
   }
@@ -134,35 +137,35 @@ function shiftPoint(p) {
     x: p.originX + point.lowestX + Math.random() * (point.highestX - point.lowestX),
     y: p.originY + point.lowestY + Math.random() * (point.highestY - point.lowestY),
     ease: Sine.easeInOut,
-    onComplete: function() {
+    onComplete: function () {
       shiftPoint(p);
     }
   });
 }
 
-function getDistance(p1, p2) {
+function getDistance (p1, p2) {
   return Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
 }
 
-function assignRandomColor(p) {
+function assignRandomColor (p) {
   p.r = Math.floor(Math.random() * 255);
   p.g = Math.floor(Math.random() * 255);
   p.b = Math.floor(Math.random() * 255);
 }
 
-function mouseDownHandler(e) {
+function mouseDownHandler (e) {
   for (let p of points) {
     assignRandomColor(p);
   }
 }
 
-function mouseMoveHandler(e) {
+function mouseMoveHandler (e) {
   mouse.x = e.clientX - canvas.offsetLeft;
   mouse.y = e.clientY - canvas.offsetTop;
 }
 
-function resizeHandler() {
+function resizeHandler () {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  background.style.height = canvas.height + "px";
+  background.style.height = canvas.height + 'px';
 }
