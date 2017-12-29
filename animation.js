@@ -77,6 +77,7 @@ window.addEventListener('resize', resizeHandler);
 
 function draw () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.lineWidth = point.lineWidth;
   for (let p of points) {
     if (p.alpha > 0) {
       for (let c of p.closest) {
@@ -97,7 +98,6 @@ function drawLine (p, c) {
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
   ctx.lineTo(c.x, c.y);
-  ctx.lineWidth = point.lineWidth;
   ctx.strokeStyle = 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + p.alpha + ')';
   ctx.stroke();
   ctx.closePath();
