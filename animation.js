@@ -1,6 +1,5 @@
 /* global Sine */
 /* global TweenLite */
-/* global requestAnimationFrame */
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let background = document.getElementById('background');
@@ -91,7 +90,7 @@ function draw () {
     }
   }
   processPoints();
-  requestAnimationFrame(draw);
+  window.requestAnimationFrame(draw);
 }
 
 function drawLine (p, c) {
