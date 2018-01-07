@@ -8,3 +8,9 @@
   background-position: center;
   background-image: url('background.jpg');
 }
+
+.change-color {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}

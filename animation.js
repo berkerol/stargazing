@@ -22,9 +22,9 @@ let point = {
   lowestRadius: 2,
   lowestX: -50,
   lowestY: -50,
-  color: [255, 215, 0],
   lineWidth: 2,
-  randomColors: false
+  color: 0,
+  colors: [[240, 60, 80], [255, 100, 0], [255, 160, 0], [255, 220, 0], [220, 255, 0], [160, 255, 0], [50, 255, 0], [0, 220, 120], [130, 230, 220], [0, 220, 240], [240, 120, 255], [210, 140, 170], [220, 180, 240], [160, 220, 220], [200, 200, 200]]
 };
 
 let points = [];
@@ -38,9 +38,9 @@ for (let x = 0; x < canvas.width; x += canvas.width / gap) {
       originX: px,
       y: py,
       originY: py,
-      r: point.color[0],
-      g: point.color[1],
-      b: point.color[2]
+      r: point.colors[point.color][0],
+      g: point.colors[point.color][1],
+      b: point.colors[point.color][2]
     });
   }
 }
@@ -129,7 +129,7 @@ function processPoints () {
 }
 
 function shiftPoint (p) {
-  if (point.randomColors) {
+  if (point.color === point.colors.length) {
     assignRandomColor(p);
   }
   TweenLite.to(p, point.lowestDuration + Math.random() * (point.highestDuration - point.lowestDuration), {
@@ -150,6 +150,25 @@ function assignRandomColor (p) {
   p.r = Math.floor(Math.random() * 255);
   p.g = Math.floor(Math.random() * 255);
   p.b = Math.floor(Math.random() * 255);
+}
+
+function changeColor () {
+  if (point.color === point.colors.length) {
+    point.color = 0;
+  } else {
+    point.color++;
+  }
+  if (point.color === point.colors.length) {
+    for (let p of points) {
+      assignRandomColor(p);
+    }
+  } else {
+    for (let p of points) {
+      p.r = point.colors[point.color][0];
+      p.g = point.colors[point.color][1];
+      p.b = point.colors[point.color][2];
+    }
+  }
 }
 
 function mouseDownHandler (e) {
