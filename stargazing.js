@@ -6,6 +6,7 @@ let ctx = canvas.getContext('2d');
 let background = document.getElementById('background');
 resizeHandler();
 
+FPSMeter.theme.colorful.container.height = '40px';
 let meter = new FPSMeter({
   left: canvas.width - 130 + 'px',
   top: 'auto',
