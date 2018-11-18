@@ -34,8 +34,8 @@ let point = {
   lowestX: -50,
   lowestY: -50,
   lineWidth: 2,
-  color: 0,
-  colors: [[240, 60, 80], [255, 100, 0], [255, 160, 0], [255, 220, 0], [220, 255, 0], [160, 255, 0], [50, 255, 0], [0, 220, 120], [130, 230, 220], [0, 220, 240], [240, 120, 255], [210, 140, 170], [220, 180, 240], [160, 220, 220], [200, 200, 200]]
+  color: 15,
+  colors: [[255, 30, 40], [255, 150, 20], [255, 220, 0], [0, 255, 100], [100, 255, 20], [50, 200, 200], [120, 220, 255], [80, 180, 255], [220, 120, 255], [255, 100, 150], [240, 20, 200], [140, 140, 140], [170, 170, 170], [200, 200, 200]]
 };
 
 let points = [];
@@ -48,14 +48,12 @@ for (let x = 0; x < canvas.width; x += canvas.width / gap) {
       x: px,
       originX: px,
       y: py,
-      originY: py,
-      r: point.colors[point.color][0],
-      g: point.colors[point.color][1],
-      b: point.colors[point.color][2]
+      originY: py
     });
   }
 }
 for (let p1 of points) {
+  p1.color = generateRandomColor();
   let closest = [];
   for (let p2 of points) {
     if (p1 !== p2) {
@@ -81,7 +79,6 @@ draw();
 for (let p of points) {
   shiftPoint(p);
 }
-document.addEventListener('mousedown', mouseDownHandler);
 document.addEventListener('mousemove', mouseMoveHandler);
 window.addEventListener('resize', resizeHandler);
 
@@ -109,7 +106,7 @@ function drawLine (p, c) {
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
   ctx.lineTo(c.x, c.y);
-  ctx.strokeStyle = 'rgba(' + c.r + ',' + c.g + ',' + c.b + ',' + p.alpha + ')';
+  ctx.strokeStyle = 'rgba(' + c.color[0] + ',' + c.color[1] + ',' + c.color[2] + ',' + p.alpha + ')';
   ctx.stroke();
   ctx.closePath();
 }
@@ -117,7 +114,7 @@ function drawLine (p, c) {
 function drawCircle (p) {
   ctx.beginPath();
   ctx.arc(p.circle.position.x, p.circle.position.y, p.circle.radius, 0, 2 * Math.PI);
-  ctx.fillStyle = 'rgba(' + p.r + ',' + p.g + ',' + p.b + ',' + p.circle.alpha + ')';
+  ctx.fillStyle = 'rgba(' + p.color[0] + ',' + p.color[1] + ',' + p.color[2] + ',' + p.circle.alpha + ')';
   ctx.fill();
   ctx.closePath();
 }
@@ -141,8 +138,8 @@ function processPoints () {
 }
 
 function shiftPoint (p) {
-  if (point.color === point.colors.length) {
-    assignRandomColor(p);
+  if (point.color === point.colors.length + 2) {
+    p.color = generateRandomColor();
   }
   TweenLite.to(p, point.lowestDuration + Math.random() * (point.highestDuration - point.lowestDuration), {
     x: p.originX + point.lowestX + Math.random() * (point.highestX - point.lowestX),
@@ -158,36 +155,28 @@ function getDistance (p1, p2) {
   return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2;
 }
 
-function assignRandomColor (p) {
-  p.r = Math.floor(Math.random() * 255);
-  p.g = Math.floor(Math.random() * 255);
-  p.b = Math.floor(Math.random() * 255);
+function generateRandomColor () {
+  return point.colors[Math.floor(Math.random() * point.colors.length)];
 }
 
-function changeColor () {
-  if (point.color === point.colors.length) {
-    point.color = 0;
-  } else {
-    point.color++;
-  }
-  if (point.color === point.colors.length) {
+$('.dropdown-menu li a').click(function () {
+  $('#selected').text($(this).text());
+  point.color = $(this).closest('li').data('value');
+  if (point.color === point.colors.length + 2 || point.color === point.colors.length + 1) {
     for (let p of points) {
-      assignRandomColor(p);
+      p.color = generateRandomColor();
+    }
+  } else if (point.color === point.colors.length) {
+    let color = generateRandomColor();
+    for (let p of points) {
+      p.color = color;
     }
   } else {
     for (let p of points) {
-      p.r = point.colors[point.color][0];
-      p.g = point.colors[point.color][1];
-      p.b = point.colors[point.color][2];
+      p.color = point.colors[point.color];
     }
   }
-}
-
-function mouseDownHandler (e) {
-  for (let p of points) {
-    assignRandomColor(p);
-  }
-}
+});
 
 function mouseMoveHandler (e) {
   mouse.x = e.clientX - canvas.offsetLeft;
