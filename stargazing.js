@@ -1,13 +1,13 @@
 /* global Sine */
 /* global TweenLite */
 /* global FPSMeter */
-let canvas = document.getElementById('canvas');
-let ctx = canvas.getContext('2d');
-let background = document.getElementById('background');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const background = document.getElementById('background');
 resizeHandler();
 
 FPSMeter.theme.colorful.container.height = '40px';
-let meter = new FPSMeter({
+const meter = new FPSMeter({
   left: canvas.width - 130 + 'px',
   top: 'auto',
   bottom: '12px',
@@ -16,15 +16,15 @@ let meter = new FPSMeter({
   graph: 1
 });
 
-let gap = 25;
-let connections = 8;
+const gap = 25;
+const connections = 8;
 
-let mouse = {
+const mouse = {
   x: canvas.width / 2,
   y: canvas.height / 2
 };
 
-let point = {
+const point = {
   highestDuration: 2,
   highestRadius: 4,
   highestX: 50,
@@ -38,12 +38,12 @@ let point = {
   colors: [[255, 30, 40], [255, 150, 20], [255, 220, 0], [0, 255, 100], [100, 255, 20], [50, 200, 200], [120, 220, 255], [80, 180, 255], [220, 120, 255], [255, 100, 150], [240, 20, 200], [140, 140, 140], [170, 170, 170], [200, 200, 200]]
 };
 
-let points = [];
+const points = [];
 
 for (let x = 0; x < canvas.width; x += canvas.width / gap) {
   for (let y = 0; y < canvas.height; y += canvas.height / gap) {
-    let px = x + Math.random() * canvas.width / gap;
-    let py = y + Math.random() * canvas.height / gap;
+    const px = x + Math.random() * canvas.width / gap;
+    const py = y + Math.random() * canvas.height / gap;
     points.push({
       x: px,
       originX: px,
@@ -52,10 +52,10 @@ for (let x = 0; x < canvas.width; x += canvas.width / gap) {
     });
   }
 }
-for (let p1 of points) {
+for (const p1 of points) {
   p1.color = generateRandomColor();
-  let closest = [];
-  for (let p2 of points) {
+  const closest = [];
+  for (const p2 of points) {
     if (p1 !== p2) {
       for (let i = 0; i < connections; i++) {
         if (closest[i] === undefined) {
@@ -76,7 +76,7 @@ for (let p1 of points) {
   };
 }
 draw();
-for (let p of points) {
+for (const p of points) {
   shiftPoint(p);
 }
 document.addEventListener('mousemove', mouseMoveHandler);
@@ -86,14 +86,14 @@ function draw () {
   meter.tick();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.lineWidth = point.lineWidth;
-  for (let p of points) {
+  for (const p of points) {
     if (p.alpha > 0) {
-      for (let c of p.closest) {
+      for (const c of p.closest) {
         drawLine(p, c);
       }
     }
   }
-  for (let p of points) {
+  for (const p of points) {
     if (p.circle.alpha > 0) {
       drawCircle(p);
     }
@@ -120,7 +120,7 @@ function drawCircle (p) {
 }
 
 function processPoints () {
-  for (let p of points) {
+  for (const p of points) {
     if (Math.abs(getDistance(mouse, p)) < 4000) {
       p.alpha = 0.3;
       p.circle.alpha = 0.6;
@@ -163,16 +163,16 @@ $('.dropdown-menu li a').click(function () {
   $('#selected').text($(this).text());
   point.color = $(this).closest('li').data('value');
   if (point.color === point.colors.length + 2 || point.color === point.colors.length + 1) {
-    for (let p of points) {
+    for (const p of points) {
       p.color = generateRandomColor();
     }
   } else if (point.color === point.colors.length) {
-    let color = generateRandomColor();
-    for (let p of points) {
+    const color = generateRandomColor();
+    for (const p of points) {
       p.color = color;
     }
   } else {
-    for (let p of points) {
+    for (const p of points) {
       p.color = point.colors[point.color];
     }
   }
