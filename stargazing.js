@@ -106,7 +106,7 @@ function drawLine (p, c) {
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
   ctx.lineTo(c.x, c.y);
-  ctx.strokeStyle = 'rgba(' + c.color[0] + ',' + c.color[1] + ',' + c.color[2] + ',' + p.alpha + ')';
+  ctx.strokeStyle = `rgba(${c.color[0]}, ${c.color[1]}, ${c.color[2]}, ${p.alpha})`;
   ctx.stroke();
   ctx.closePath();
 }
@@ -114,7 +114,7 @@ function drawLine (p, c) {
 function drawCircle (p) {
   ctx.beginPath();
   ctx.arc(p.circle.position.x, p.circle.position.y, p.circle.radius, 0, 2 * Math.PI);
-  ctx.fillStyle = 'rgba(' + p.color[0] + ',' + p.color[1] + ',' + p.color[2] + ',' + p.circle.alpha + ')';
+  ctx.fillStyle = `rgba(${p.color[0]}, ${p.color[1]}, ${p.color[2]}, ${p.circle.alpha})`;
   ctx.fill();
   ctx.closePath();
 }
