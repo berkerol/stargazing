@@ -32,8 +32,8 @@ const point = {
   lowestX: -50,
   lowestY: -50,
   lineWidth: 2,
-  color: 15,
-  colors: [[255, 30, 40], [255, 150, 20], [255, 220, 0], [0, 255, 100], [100, 255, 20], [50, 200, 200], [120, 220, 255], [80, 180, 255], [220, 120, 255], [255, 100, 150], [240, 20, 200], [140, 140, 140], [170, 170, 170], [200, 200, 200]]
+  color: 16,
+  colors: [[255, 30, 40], [255, 150, 20], [255, 220, 0], [0, 255, 100], [100, 255, 20], [50, 200, 200], [120, 220, 255], [80, 180, 255], [220, 120, 255], [255, 100, 150], [240, 20, 200], [140, 140, 140], [170, 170, 170], [200, 200, 200], [255, 0, 0]]
 };
 
 const points = [];
@@ -77,6 +77,9 @@ draw();
 for (const p of points) {
   shiftPoint(p);
 }
+document.getElementById('customColor').addEventListener('change', function () {
+  point.colors[point.colors.length - 1] = this.value.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16));
+});
 document.addEventListener('mousemove', mouseMoveHandler);
 window.addEventListener('resize', resizeHandler);
 
@@ -154,7 +157,7 @@ function getDistance (p1, p2) {
 }
 
 function generateRandomColor () {
-  return point.colors[Math.floor(Math.random() * point.colors.length)];
+  return point.colors[Math.floor(Math.random() * (point.colors.length - 1))];
 }
 
 $('.dropdown-menu li a').click(function () {
