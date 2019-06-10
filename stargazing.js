@@ -160,9 +160,9 @@ function generateRandomColor () {
   return point.colors[Math.floor(Math.random() * (point.colors.length - 1))];
 }
 
-$('.dropdown-menu li a').click(function () {
+$('.dropdown-item').click(function () {
   $('#selected').text($(this).text());
-  point.color = $(this).closest('li').data('value');
+  point.color = $(this).closest('.dropdown-item').data('value');
   if (point.color === point.colors.length + 2 || point.color === point.colors.length + 1) {
     for (const p of points) {
       p.color = generateRandomColor();

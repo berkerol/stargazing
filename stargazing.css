@@ -9,7 +9,7 @@
   background-image: url('background.jpg');
 }
 
-.change-color {
+.btn-group-center {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
