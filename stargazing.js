@@ -79,7 +79,7 @@ for (const p of points) {
 }
 document.querySelectorAll('.dropdown-item').forEach(e => {
   e.addEventListener('click', function () {
-    document.getElementById('selected').innerText = this.innerText;
+    document.getElementById('change-color-text').innerText = this.innerText;
     point.color = +this.dataset.value;
     if (point.color === point.colors.length + 2 || point.color === point.colors.length + 1) {
       for (const p of points) {
