@@ -1,4 +1,4 @@
-/* global $ Sine TweenLite FPSMeter */
+/* global Sine TweenLite FPSMeter */
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const background = document.getElementById('background');
@@ -77,6 +77,26 @@ draw();
 for (const p of points) {
   shiftPoint(p);
 }
+document.querySelectorAll('.dropdown-item').forEach(e => {
+  e.addEventListener('click', function () {
+    document.getElementById('selected').innerText = this.innerText;
+    point.color = +this.dataset.value;
+    if (point.color === point.colors.length + 2 || point.color === point.colors.length + 1) {
+      for (const p of points) {
+        p.color = generateRandomColor();
+      }
+    } else if (point.color === point.colors.length) {
+      const color = generateRandomColor();
+      for (const p of points) {
+        p.color = color;
+      }
+    } else {
+      for (const p of points) {
+        p.color = point.colors[point.color];
+      }
+    }
+  });
+});
 document.getElementById('customColor').addEventListener('change', function () {
   point.colors[point.colors.length - 1] = this.value.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16));
 });
@@ -159,25 +179,6 @@ function getDistance (p1, p2) {
 function generateRandomColor () {
   return point.colors[Math.floor(Math.random() * (point.colors.length - 1))];
 }
-
-$('.dropdown-item').click(function () {
-  $('#selected').text($(this).text());
-  point.color = $(this).closest('.dropdown-item').data('value');
-  if (point.color === point.colors.length + 2 || point.color === point.colors.length + 1) {
-    for (const p of points) {
-      p.color = generateRandomColor();
-    }
-  } else if (point.color === point.colors.length) {
-    const color = generateRandomColor();
-    for (const p of points) {
-      p.color = color;
-    }
-  } else {
-    for (const p of points) {
-      p.color = point.colors[point.color];
-    }
-  }
-});
 
 function mouseMoveHandler (e) {
   mouse.x = e.clientX - canvas.offsetLeft;
