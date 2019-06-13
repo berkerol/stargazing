@@ -124,20 +124,18 @@ function draw () {
 }
 
 function drawLine (p, c) {
+  ctx.strokeStyle = `rgba(${c.color[0]}, ${c.color[1]}, ${c.color[2]}, ${p.alpha})`;
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
   ctx.lineTo(c.x, c.y);
-  ctx.strokeStyle = `rgba(${c.color[0]}, ${c.color[1]}, ${c.color[2]}, ${p.alpha})`;
   ctx.stroke();
-  ctx.closePath();
 }
 
 function drawCircle (p) {
+  ctx.fillStyle = `rgba(${p.color[0]}, ${p.color[1]}, ${p.color[2]}, ${p.circle.alpha})`;
   ctx.beginPath();
   ctx.arc(p.circle.position.x, p.circle.position.y, p.circle.radius, 0, 2 * Math.PI);
-  ctx.fillStyle = `rgba(${p.color[0]}, ${p.color[1]}, ${p.color[2]}, ${p.circle.alpha})`;
   ctx.fill();
-  ctx.closePath();
 }
 
 function processPoints () {
