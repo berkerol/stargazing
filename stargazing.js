@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 const background = document.getElementById('background');
 resizeHandler();
 
+let animation;
 FPSMeter.theme.colorful.container.height = '40px';
 const meter = new FPSMeter({
   left: canvas.width - 130 + 'px',
@@ -100,6 +101,7 @@ document.querySelectorAll('.dropdown-item').forEach(e => {
 document.getElementById('customColor').addEventListener('change', function () {
   point.colors[point.colors.length - 1] = this.value.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16));
 });
+document.addEventListener('keyup', keyUpHandler);
 document.addEventListener('mousemove', mouseMoveHandler);
 window.addEventListener('resize', resizeHandler);
 
@@ -120,7 +122,7 @@ function draw () {
     }
   }
   processPoints();
-  window.requestAnimationFrame(draw);
+  animation = window.requestAnimationFrame(draw);
 }
 
 function drawLine (p, c) {
@@ -178,9 +180,22 @@ function generateRandomColor () {
   return point.colors[Math.floor(Math.random() * (point.colors.length - 1))];
 }
 
+function keyUpHandler (e) {
+  if (e.keyCode === 80) {
+    if (animation === undefined) {
+      animation = window.requestAnimationFrame(draw);
+    } else {
+      window.cancelAnimationFrame(animation);
+      animation = undefined;
+    }
+  }
+}
+
 function mouseMoveHandler (e) {
-  mouse.x = e.clientX - canvas.offsetLeft;
-  mouse.y = e.clientY - canvas.offsetTop;
+  if (animation !== undefined) {
+    mouse.x = e.clientX - canvas.offsetLeft;
+    mouse.y = e.clientY - canvas.offsetTop;
+  }
 }
 
 function resizeHandler () {
