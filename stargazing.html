@@ -22,21 +22,14 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/easing/EasePack.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/fpsmeter/0.3.1/fpsmeter.min.js"></script>
   <script defer src="https://berkerol.github.io/libraries/canvas.js"></script>
+  <script defer src="https://berkerol.github.io/libraries/form.js"></script>
+  <script defer src="dropdown.js"></script>
   <script defer src="https://berkerol.github.io/libraries/colors.js"></script>
   <script defer src="stargazing.js"></script>
 </head>
 
 <body>
   <div id="background">
-    <div class="btn-group btn-group-lg btn-group-center">
-      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" accesskey="c"><i class="fas fa-palette"></i> <span id="change-color-text"><u>C</u>hange color</span></button>
-      <div class="dropdown-menu" id="change-color">
-        <button type="button" class="dropdown-item" data-value="14" id="custom">Custom color <input type="color" value="#ff0000" id="customColor" /></button>
-        <button type="button" class="dropdown-item" data-value="15">Random (same color for each line)</button>
-        <button type="button" class="dropdown-item" data-value="16">Random (different color for each line)</button>
-        <button type="button" class="dropdown-item" data-value="17">Random (change colors in each shift)</button>
-      </div>
-    </div>
     <canvas id="canvas">Your browser doesn't support HTML5.</canvas>
   </div>
 </body>
