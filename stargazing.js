@@ -1,7 +1,4 @@
-/* global Sine TweenLite canvas ctx animation addPause loop paintCircle paintLine getDistance generateRandomNumber colorIndex colorCodes addDropdownListener addCustomColor generateRandomColor */
-const background = document.getElementById('background');
-resizeHandler();
-
+/* global Sine TweenLite canvas ctx animation addPause loop paintCircle paintLine getDistance generateRandomNumber colorIndex colorCodes addDropdownListener addCustomColor generateRandomColor resizeHandler backgroundCanvas */
 const gap = 25;
 const connections = 8;
 
@@ -24,6 +21,7 @@ const point = {
 
 const points = [];
 
+resizeHandler();
 for (let x = 0; x < canvas.width; x += canvas.width / gap) {
   for (let y = 0; y < canvas.height; y += canvas.height / gap) {
     const px = x + Math.random() * canvas.width / gap;
@@ -69,6 +67,7 @@ document.addEventListener('mousemove', mouseMoveHandler);
 window.addEventListener('resize', resizeHandler);
 
 loop(function () {
+  ctx.drawImage(backgroundCanvas, 0, 0);
   ctx.lineWidth = point.lineWidth;
   for (const p of points) {
     if (p.alpha > 0) {
@@ -122,10 +121,4 @@ function mouseMoveHandler (e) {
     mouse.x = e.clientX - canvas.offsetLeft;
     mouse.y = e.clientY - canvas.offsetTop;
   }
-}
-
-function resizeHandler () {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  background.style.height = canvas.height + 'px';
 }

@@ -2,11 +2,9 @@
   margin: 0;
 }
 
-#background {
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  background-image: url('background.jpg');
+canvas {
+  background: linear-gradient(#202020, #303030 80%, #404040);
+  display: block;
 }
 
 .btn-group-center {
