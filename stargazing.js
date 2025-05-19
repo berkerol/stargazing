@@ -1,4 +1,4 @@
-/* global Sine TweenLite canvas ctx animation addPause loop paintCircle paintLine getDistance generateRandomNumber colorIndex colorCodes addDropdownListener addCustomColor generateRandomColor resizeHandler backgroundCanvas */
+/* global gsap canvas ctx animation addPause loop paintCircle paintLine getDistance generateRandomNumber colorIndex colorCodes addDropdownListener addCustomColor generateRandomColor resizeHandler backgroundCanvas */
 const gap = 25;
 const connections = 8;
 
@@ -106,10 +106,10 @@ function shiftPoint (p) {
   if (colorIndex === colorCodes.length + 2) {
     p.color = generateRandomColor();
   }
-  TweenLite.to(p, generateRandomNumber(point.lowestDuration, point.highestDuration), {
+  gsap.to(p, generateRandomNumber(point.lowestDuration, point.highestDuration), {
     x: p.originX + generateRandomNumber(point.lowestX, point.highestX),
     y: p.originY + generateRandomNumber(point.lowestY, point.highestY),
-    ease: Sine.easeInOut,
+    ease: 'sine.inOut',
     onComplete: function () {
       shiftPoint(p);
     }
